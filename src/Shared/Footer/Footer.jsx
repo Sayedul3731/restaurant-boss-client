@@ -17,7 +17,7 @@ const Footer = () => {
                 </div>
             </nav>
         </div>
-            <div className="footer footer-center p-4 bg-base-300 text-base-content">
+            <div className="footer footer-center p-4 bg-gray-700 text-white">
                 <aside>
                     <p>Copyright © 2023 - All right reserved by ACME Industries Ltd</p>
                 </aside>
