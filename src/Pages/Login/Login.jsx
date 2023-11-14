@@ -1,9 +1,13 @@
+/* eslint-disable react/no-unescaped-entities */
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
-import { useEffect,useState, useRef } from "react"
+import { useEffect,useState, useRef, useContext } from "react"
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Providers/AuthProviders';
 
 const Login = () => {
     const [disabled, setDisabled] = useState(true)
     const captchaRef = useRef(null)
+    const {signIn} = useContext(AuthContext)
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
@@ -13,6 +17,13 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+        signIn(email, password)
+        .then(result => {
+            console.log(result.user);
+        })
+        .catch(error => {
+            console.error(error);
+        })
     }
     const handleValidateCaptcha = () => {
        const user_captcha_value = captchaRef.current.value;
@@ -57,6 +68,7 @@ const Login = () => {
                         <div className="form-control mt-6">
                             <button disabled={disabled} type="submit" className="btn btn-primary">Login</button>
                         </div>
+                    <p>Don't Have An Account? Please <Link to="/register" className='text-blue-600'>Register</Link></p>
                     </form>
                 </div>
             </div>
