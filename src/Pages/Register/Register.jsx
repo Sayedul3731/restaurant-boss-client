@@ -4,36 +4,27 @@ import { useContext } from "react"
 import { useForm } from "react-hook-form"
 
 const Register = () => {
-    const { createUser } = useContext(AuthContext)
+    const { createUser, updateUserProfile } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors }, } = useForm()
     const onSubmit = (data) => {
         console.log(data)
         createUser(data.email, data.password)
-        .then(result => {
-            console.log(result.user);
-        })
-        .catch(errors => {
-            console.error(errors);
-        })
+            .then(result => {
+                console.log(result.user);
+                console.log(data.name, data.photoURL);
+                updateUserProfile(data.name, data.photoURL)
+                    .then(() => { 
+                        console.log('User profile updated.');
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            })
+            .catch(errors => {
+                console.error(errors);
+            })
     }
 
-    
-
-    // const handleRegister = e => {
-    //     e.preventDefault()
-    //     const form = e.target;
-    //     const name = form.name.value;
-    //     const email = form.email.value;
-    //     const password = form.password.value;
-    //     console.log(name, email, password);
-    //     createUser(email, password)
-    //         .then(result => {
-    //             console.log(result.user);
-    //         })
-    //         .catch(error => {
-    //             console.error(error);
-    //         })
-    // }
     return (
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-row">
@@ -47,15 +38,22 @@ const Register = () => {
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
-                            <input type="name" {...register("name", {required:true})} name="name" placeholder="User Name" className="input input-bordered" />
+                            <input type="name" {...register("name", { required: true })} name="name" placeholder="User Name" className="input input-bordered" />
                             {errors.name && <span className="text-red-600 mt-2">Name is required</span>}
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">photoURL</span>
+                            </label>
+                            <input type="text" {...register("photoURL", { required: true })} placeholder="User photoURL" className="input input-bordered" />
+                            {errors.photoURL && <span className="text-red-600 mt-2">PhotoURL is required</span>}
                         </div>
 
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" {...register("email", {required:true})} name="email" placeholder="email" className="input input-bordered" />
+                            <input type="email" {...register("email", { required: true })} name="email" placeholder="email" className="input input-bordered" />
                             {errors.email && <span className="text-red-600 mt-2">Email is required</span>}
                         </div>
 
@@ -63,11 +61,12 @@ const Register = () => {
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" {...register("password", {required:true,
-                                 minLength:6,
-                                 maxLength: 20,
-                                 pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
-                                 })} name="password" placeholder="password" className="input input-bordered" />
+                            <input type="password" {...register("password", {
+                                required: true,
+                                minLength: 6,
+                                maxLength: 20,
+                                pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                            })} name="password" placeholder="password" className="input input-bordered" />
                             {errors.password?.type === 'pattern' && <span className="text-red-600 mt-2">Password must have a capital letter, a special character, a number and a small letter</span>}
                             {errors.password?.type === 'required' && <span className="text-red-600 mt-2">Password is required</span>}
                             {errors.password?.type === 'minLength' && <span className="text-red-600 mt-2">Password must be 6 characters</span>}
