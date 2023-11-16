@@ -4,6 +4,7 @@ import { useEffect, useState, useContext } from "react"
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Providers/AuthProviders';
 import Swal from 'sweetalert2'
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 
 const Login = () => {
     const [disabled, setDisabled] = useState(true)
@@ -11,7 +12,7 @@ const Login = () => {
     const navigate = useNavigate()
 
     let from = location.state?.from?.pathname || "/";
-console.log('location in the login page', from);
+    console.log('location in the login page', from);
     const { signIn } = useContext(AuthContext)
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -42,7 +43,7 @@ console.log('location in the login page', from);
                   `
                     }
                 });
-                navigate(from, {replace : true})
+                navigate(from, { replace: true })
                 console.log('from', from);
             })
             .catch(error => {
@@ -93,6 +94,7 @@ console.log('location in the login page', from);
                             <button disabled={disabled} type="submit" className="btn btn-primary">Login</button>
                         </div>
                         <p>Don't Have An Account? Please <Link to="/register" className='text-blue-600'>Register</Link></p>
+                        <SocialLogin></SocialLogin>
                     </form>
                 </div>
             </div>

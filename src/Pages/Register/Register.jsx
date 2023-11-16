@@ -1,20 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const Register = () => {
     const { createUser, updateUserProfile } = useContext(AuthContext)
-    const { register, handleSubmit, formState: { errors }, } = useForm()
+    const axiosPublic = useAxiosPublic()
+    const navigate = useNavigate()
+    const { register, handleSubmit,reset, formState: { errors }, } = useForm()
     const onSubmit = (data) => {
         console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 console.log(result.user);
-                console.log(data.name, data.photoURL);
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => { 
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
                         console.log('User profile updated.');
+                        axiosPublic.post('/users', userInfo)
+                        .then(res => {
+                            console.log(res.data);
+                            if(res.data?.insertedId){
+                                reset()
+                                Swal.fire({
+                                    title: "Created!",
+                                    text: "User created Successfully.",
+                                    icon: "success"
+                                  });
+                                  navigate('/')
+                            }
+                        })
                     })
                     .catch((error) => {
                         console.log(error);
@@ -79,6 +100,7 @@ const Register = () => {
                             <button type="submit" className="btn btn-primary">Register</button>
                         </div>
                         <p>Already Have An Account? Please <Link to="/login" className='text-blue-600'>Login</Link></p>
+                        <SocialLogin></SocialLogin>
                     </form>
                 </div>
             </div>
