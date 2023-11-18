@@ -1,10 +1,11 @@
 import { FaAd, FaBook, FaCalendar, FaEnvelope, FaHome, FaList, FaSearch, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 
 const Dashboard = () => {
 
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
     return (
         <div className="flex">
             <div className="w-64 min-h-screen bg-orange-400">
@@ -21,7 +22,10 @@ const Dashboard = () => {
                                 <NavLink to="/dashboard/manageUsers"><FaList></FaList> Manage Users</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/bookings"><FaBook/> Manage Bookings</NavLink>
+                                <NavLink to="/dashboard/manageItems"><FaList /> Manage Items</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/bookings"><FaBook /> Manage Bookings</NavLink>
                             </li>
                             <li>
                                 <NavLink to="/dashboard/users"><FaUsers></FaUsers> All Users</NavLink>
@@ -33,6 +37,9 @@ const Dashboard = () => {
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/userHome"><FaCalendar></FaCalendar>Reservation</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/manageItems"><FaList /> Manage Items</NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/review"><FaAd></FaAd>Add A Review</NavLink>
