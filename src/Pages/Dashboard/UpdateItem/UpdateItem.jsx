@@ -31,6 +31,7 @@ const UpdateItem = () => {
             recipe: data.recipe,
             image: res.data.data.display_url
         }
+        console.log('image in update component', res.data.data.display_url);
         const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem);
         console.log('update an item', menuRes.data);
         if (menuRes.data.modifiedCount > 0 ) {
