@@ -1,5 +1,5 @@
 # Restaurant Boss
-http://localhost:5000/
+https://restaurant-boss-c1fb6.web.app/
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
