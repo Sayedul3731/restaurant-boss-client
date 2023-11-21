@@ -25,7 +25,7 @@ const Dashboard = () => {
                                 <NavLink to="/dashboard/manageItems"><FaList /> Manage Items</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/bookings"><FaBook /> Manage Bookings</NavLink>
+                                <NavLink to="/dashboard/paymentHistory"><FaBook /> Payment History</NavLink>
                             </li>
                             <li>
                                 <NavLink to="/dashboard/users"><FaUsers></FaUsers> All Users</NavLink>
@@ -36,7 +36,7 @@ const Dashboard = () => {
                                     <NavLink to="/dashboard/userHome"><FaHome></FaHome>User Home</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/dashboard/userHome"><FaCalendar></FaCalendar>Reservation</NavLink>
+                                    <NavLink to="/dashboard/reservation"><FaCalendar></FaCalendar>Reservation</NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/manageItems"><FaList /> Manage Items</NavLink>
